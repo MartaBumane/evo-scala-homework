@@ -26,16 +26,16 @@ object ClassesAndTraits {
         s"($x, $y)"
     }
 
-    sealed trait Shape extends Located with Bounded
+    sealed trait Shape2D extends Located2D with Bounded
 
     sealed trait Shape3D extends Shape with Located3D with Bounded3D
 
-    sealed trait Located {
+    sealed trait Located2D {
         def x: Double
         def y: Double
     }
 
-    sealed trait Located3D extends Located {
+    sealed trait Located3D extends Located2D {
         def z: Double
     }
 
@@ -51,14 +51,14 @@ object ClassesAndTraits {
         def maxZ: Double
     }
 
-    final case class Point(x: Double, y: Double) extends Shape {
+    final case class Point(x: Double, y: Double) extends Shape2D {
         override def minX: Double = x
         override def maxX: Double = x
         override def minY: Double = y
         override def maxY: Double = y
     }
 
-    final case class Circle(centerX: Double, centerY: Double, radius: Double) extends Shape {
+    final case class Circle(centerX: Double, centerY: Double, radius: Double) extends Shape2D {
         override def x: Double = centerX
         override def y: Double = centerY
         override def minX: Double = x - radius
@@ -67,7 +67,7 @@ object ClassesAndTraits {
         override def maxY: Double = y + radius
     }
 
-    final case class Rectangle(leftX: Double, bottomY: Double, length: Double, height: Double) extends Shape {
+    final case class Rectangle(leftX: Double, bottomY: Double, length: Double, height: Double) extends Shape2D {
         override def minX: Double = leftX
         override def maxX: Double = leftX + length
         override def minY: Double = bottomY
@@ -76,7 +76,7 @@ object ClassesAndTraits {
         override def y: Double = bottomY
     }
 
-    final case class Triangle(point1: Point, point2: Point, point3: Point) extends Shape {
+    final case class Triangle(point1: Point, point2: Point, point3: Point) extends Shape2D {
         override def minX: Double = Set(point1, point2, point3).map(_.minX).min
         override def maxX: Double = Set(point1, point2, point3).map(_.maxX).max
         override def minY: Double = Set(point1, point2, point3).map(_.minY).min
@@ -94,7 +94,7 @@ object ClassesAndTraits {
         override def maxZ: Double = z
     }
 
-    final case class Square(startingPoint: Point3D, width: Double) extends Shape {
+    final case class Square(startingPoint: Point3D, width: Double) extends Shape2D {
         override val x = startingPoint.x
         override val y = startingPoint.y
         override val z = startingPoint.z
@@ -107,7 +107,7 @@ object ClassesAndTraits {
         override def maxZ: Double = z
     }
 
-    final case class Cube(x: Double, y: Double, z: Double, edge: Double) {
+    final case class Cube(x: Double, y: Double, z: Double, edge: Double) extends Shape3D {
         override def minX: Double = x
         override def maxX: Double = x + edge
         override def minY: Double = y
@@ -116,7 +116,7 @@ object ClassesAndTraits {
         override def maxZ: Double = z + edge
     }
 
-    final case class Sphere(centerX: Double, centerY: Double, centerZ: Double, radius: Double) {
+    final case class Sphere(centerX: Double, centerY: Double, centerZ: Double, radius: Double) extends Shape3D {
         override def x: Double = centerX
         override def y: Double = centerY
         override def z: Double = centerZ
@@ -170,7 +170,7 @@ object ClassesAndTraits {
         case Sphere(centerX, centerY, centerZ, radius) => (4 * math.Pi * math.pow(radius, 3)) / 3
     }
 
-    object Origin extends Located {
+    object Origin extends Located2D {
         override def x: Double = 0
         override def y: Double = 0
     }
