@@ -24,7 +24,7 @@ object ControlStructuresHomework {
 
     input match {
       case List("")                                           => Left(ErrorMessage("Empty"))
-      case _ :: xs if xs.map(_.toDoubleOption).contains(None) => Left(ErrorMessage("Incorrect input"))
+      case _ :: xs if xs.map(_.toDoubleOption).contains(None) => Left(ErrorMessage("Incorrect input- input doesn't contain numbers"))
       case x :: xs =>
         x match {
           case "divide"                  => Right(Divide(xs.head.toDouble, xs.tail.head.toDouble))
