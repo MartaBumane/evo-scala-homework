@@ -1,9 +1,14 @@
 package datastructures
 
 object DataStructures {
-    def sortConsideringEqualValues[T](map: Map[T, Int]): List[(Set[T], Int)] ={
-        map.map{
-            case (_, v) => (map.filter({case (_, b) => v == b}).map(_._1).toSet,v)
-        }.toList.sortBy({case (_, y) => y});
+    def sortConsideringEqualValues[T](map: Map[T, Int]): List[(Set[T], Int)] = {
+        val groupedByValue = map.groupBy { case (_, value) => value }
+        val mapSorted = groupedByValue.toList.map {
+            case (key, values) => (values.keySet, key)
+        }
+        val resultMap = mapSorted.sortBy {
+            case (_, value) => value
+        }
+        resultMap;
     }
 }
