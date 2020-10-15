@@ -82,7 +82,7 @@ object AlgebraicDataTypes {
 
     final case class Card(suite: Suite, rank: Rank)
 
-    final case class Hand private (handCards: List[Card])
+    final case class Hand private (handCards: Set[Card])
     object Hand {
         def create(cards: List[Card]): Option[Hand] = {
             handCards.length match {
@@ -156,7 +156,7 @@ object AlgebraicDataTypes {
         }
     }
 
-    final case class TestCase(board: Board, hands: List[Hand])
+    final case class TestCase(board: Board, hands: Set[Hand])
     object TestCase {
         def create(
             board: Board,
